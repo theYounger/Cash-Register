@@ -26,9 +26,11 @@ var withdraw = document.getElementById('withdraw');
 
 //number variables
 var firstNum;
+var memNum;
+var operator;
 
 //array
-var numArray = [];
+var numArray = [];;
 
 //turn elements of numArray into number; print number; return number
 var joinNumArray = function() {
@@ -37,29 +39,84 @@ var joinNumArray = function() {
   return firstNum;
 };
 
-zero.addEventListener("click", function() {numArray.push(0); joinNumArray();} );
-doubleZero.addEventListener("click", function() {numArray.push(0); numArray.push(0); joinNumArray();} );
-one.addEventListener("click", function() {numArray.push(1); joinNumArray();} );
-two.addEventListener("click", function() {numArray.push(2); joinNumArray();} );
-three.addEventListener("click", function() {numArray.push(3); joinNumArray();} );
-four.addEventListener("click", function() {numArray.push(4); joinNumArray();} );
-five.addEventListener("click", function() {numArray.push(5); joinNumArray();} );
-six.addEventListener("click", function() {numArray.push(6); joinNumArray();} );
-seven.addEventListener("click", function() {numArray.push(7); joinNumArray();} );
-eight.addEventListener("click", function() {numArray.push(8); joinNumArray();} );
-nine.addEventListener("click", function() {numArray.push(9); joinNumArray();} );;
+/*---------------------------NUMPAD----------------------------------
+assigns buttons the click event, which pushes its corresponding number
+to array then joins pre-existing contents together to a single number
+---------------------------------------------------------------------*/
+dot.addEventListener('click', function() {numArray.push('.'); joinNumArray();} );
+zero.addEventListener('click', function() {numArray.push(0); joinNumArray();} );
+doubleZero.addEventListener('click', function() {numArray.push(0); numArray.push(0); joinNumArray();} );
+one.addEventListener('click', function() {numArray.push(1); joinNumArray();} );
+two.addEventListener('click', function() {numArray.push(2); joinNumArray();} );
+three.addEventListener('click', function() {numArray.push(3); joinNumArray();} );
+four.addEventListener('click', function() {numArray.push(4); joinNumArray();} );
+five.addEventListener('click', function() {numArray.push(5); joinNumArray();} );
+six.addEventListener('click', function() {numArray.push(6); joinNumArray();} );
+seven.addEventListener('click', function() {numArray.push(7); joinNumArray();} );
+eight.addEventListener('click', function() {numArray.push(8); joinNumArray();} );
+nine.addEventListener('click', function() {numArray.push(9); joinNumArray();} );
 
-divOP.addEventListener("click", function() {
+/*-------------------------------------------------------------------
+----------------------------OPERATORS--------------------------------
+---------------------------------------------------------------------*/
+divOP.addEventListener('click', function() {
+  calculator.load(firstNum);
+  numArray = [];
+  operator = 1;
+  return numArray, operator;
+} );
+multOP.addEventListener('click', function() {
+  calculator.load(firstNum);
+  numArray = [];
+  operator = 2;
+  return numArray, operator;
+} );
+minusOP.addEventListener('click', function() {
+  calculator.load(firstNum);
+  numArray = [];
+  operator = 3;
+  return numArray, operator;
+} );
+addOP.addEventListener('click', function() {
+  calculator.load(firstNum);
+  numArray = [];
+  operator = 4;
+  return numArray, operator;
+} );
+equalOP.addEventListener('click', function() {
+  if(operator === 1) {
+    calculator.divide(firstNum);
+    content.innerHTML = calculator.getTotal();
+  }
+  if(operator === 2) {
+    calculator.multiply(firstNum);
+    content.innerHTML = calculator.getTotal();
+  }
+  if(operator === 3) {
+    calculator.subtract(firstNum);
+    content.innerHTML = calculator.getTotal();
+  }
+  if(operator === 4) {
+    calculator.add(firstNum);
+    content.innerHTML = calculator.getTotal();
+  }
+  numArray = [];
+  return numArray;
+} );
 
-} );;
-multOP.addEventListener("click", function() {
+/*-------------------------------------------------------------------
+----------------------------REG BUTTONS------------------------------
+---------------------------------------------------------------------*/
+clear.addEventListener('click', function() {content.innerHTML = ''; numArray = []; return numArray;} );
 
-} );;
-minusOP.addEventListener("click", function() {
-} );;
-addOP.addEventListener("click", function() {
-} );;
-equalOP.addEventListener("click", function() {
+deposit.addEventListener('click', function() {
+  calculator.saveMemory();
 
-} );;
+} );
 
+
+getBalance.addEventListener('click', function() {
+  content.innerHTML = calculator.recallMemory();
+  firstNum = calculator.recallMemory();
+  return firstNum;
+} );
