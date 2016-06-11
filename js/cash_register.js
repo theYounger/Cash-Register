@@ -21,8 +21,8 @@ var addOP = document.getElementById('+');
 var equalOP = document.getElementById('=');
 var clear = document.getElementById('clear');
 var getBalance = document.getElementById('get balance');
-var deposit = document.getElementById('deposit');
-var withdraw = document.getElementById('withdraw');
+var deposit = document.getElementById('deposit cash');
+var withdraw = document.getElementById('withdraw cash');
 
 //number variables
 var firstNum;
@@ -110,13 +110,15 @@ equalOP.addEventListener('click', function() {
 clear.addEventListener('click', function() {content.innerHTML = ''; numArray = []; return numArray;} );
 
 deposit.addEventListener('click', function() {
-  calculator.saveMemory();
-
+  memNum = calculator.recallMemory();
+  memNum += firstNum;
+  calculator.saveMemory(calculator.load(memNum));
+  numArray = [];
 } );
 
 
-getBalance.addEventListener('click', function() {
-  content.innerHTML = calculator.recallMemory();
-  firstNum = calculator.recallMemory();
-  return firstNum;
-} );
+/*getBalance.addEventListener('click', function() {
+  memNum = calculator.recallMemory();
+  content.innerHTML = memNum;
+  return memNum;
+} );*/
