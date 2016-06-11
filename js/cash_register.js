@@ -14,7 +14,7 @@ var six = document.getElementById('6');
 var seven = document.getElementById('7');
 var eight = document.getElementById('8');
 var nine = document.getElementById('9');
-var divOP = document.getElementById('%');
+var divOP = document.getElementById('/');
 var multOP = document.getElementById('x');
 var minusOP = document.getElementById('-');
 var addOP = document.getElementById('+');
@@ -39,9 +39,8 @@ var joinNumArray = function() {
   return firstNum;
 };
 
-/*---------------------------NUMPAD----------------------------------
-assigns buttons the click event, which pushes its corresponding number
-to array then joins pre-existing contents together to a single number
+/*-------------------------------------------------------------------
+-------------------------------NUMPAD--------------------------------
 ---------------------------------------------------------------------*/
 dot.addEventListener('click', function() {numArray.push('.'); joinNumArray();} );
 zero.addEventListener('click', function() {numArray.push(0); joinNumArray();} );
@@ -63,25 +62,21 @@ divOP.addEventListener('click', function() {
   calculator.load(firstNum);
   numArray = [];
   operator = 1;
-  return numArray, operator;
 } );
 multOP.addEventListener('click', function() {
   calculator.load(firstNum);
   numArray = [];
   operator = 2;
-  return numArray, operator;
 } );
 minusOP.addEventListener('click', function() {
   calculator.load(firstNum);
   numArray = [];
   operator = 3;
-  return numArray, operator;
 } );
 addOP.addEventListener('click', function() {
   calculator.load(firstNum);
   numArray = [];
   operator = 4;
-  return numArray, operator;
 } );
 equalOP.addEventListener('click', function() {
   if(operator === 1) {
@@ -101,13 +96,18 @@ equalOP.addEventListener('click', function() {
     content.innerHTML = calculator.getTotal();
   }
   numArray = [];
-  return numArray;
 } );
 
 /*-------------------------------------------------------------------
 ----------------------------REG BUTTONS------------------------------
 ---------------------------------------------------------------------*/
-clear.addEventListener('click', function() {content.innerHTML = ''; numArray = []; return numArray;} );
+clear.addEventListener('click', function() {
+  memNum = 0;
+  calculator.saveMemory(calculator.load(memNum));
+  content.innerHTML = '';
+  numArray = [];
+  return numArray;
+} );
 
 deposit.addEventListener('click', function() {
   memNum = calculator.recallMemory();
@@ -116,9 +116,13 @@ deposit.addEventListener('click', function() {
   numArray = [];
 } );
 
-
-/*getBalance.addEventListener('click', function() {
+withdraw.addEventListener('click', function() {
   memNum = calculator.recallMemory();
-  content.innerHTML = memNum;
-  return memNum;
-} );*/
+  memNum -= firstNum;
+  calculator.saveMemory(calculator.load(memNum));
+  numArray = [];
+} );
+
+getBalance.addEventListener('click', function() {
+  content.innerHTML = calculator.recallMemory();
+} );
